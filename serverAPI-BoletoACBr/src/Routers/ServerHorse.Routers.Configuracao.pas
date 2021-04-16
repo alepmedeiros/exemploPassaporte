@@ -8,8 +8,8 @@ uses
   System.JSON,
   Horse,
   Horse.Jhonson,
-  Horse.CORS,
-  Horse.Paginate;
+  Horse.Paginate,
+  Horse.CORS;
 
 procedure Registry;
 
@@ -19,7 +19,7 @@ uses
   ServerHorse.Controller,
   ServerHorse.Controller.Interfaces,
   ServerHorse.Utils,
-  ServerHorse.Model.Entidade.CONFIGURACAO;
+  ServerHorse.Model.Entidade.Configuracao;
 
 
 procedure Registry;
@@ -32,46 +32,45 @@ begin
   .Get('/configuracoes',
     procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     var
-      iController : iControllerEntity<TCONFIGURACAO>;
+      iController : iControllerEntity<TConfiguracao>;
     begin
-      iController := TController.New.CONFIGURACAO;
+      iController := TController.New.Configuracao;
       iController.This.DAO.Find;
 
       Res.Send<TJsonArray>(iController.This.DataSetAsJsonArray);
     end)
 
-  .Get('/configuracoes/:ID',
+  .Get('/configuracao/:ID',
     procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     var
-      iController : iControllerEntity<TCONFIGURACAO>;
+      iController : iControllerEntity<TConfiguracao>;
     begin
-      iController := TController.New.CONFIGURACAO;
+      iController := TController.New.Configuracao;
       iController.This
         .DAO
           .SQL
-            .Where('ID_PESSOA = ' + Req.Params['ID'] )
+            .Where('ID_EMPRESA = ' + Req.Params['ID'])
           .&End
         .Find;
 
       Res.Send<TJsonArray>(iController.This.DataSetAsJsonArray);
     end)
 
-  .Post('/configuracoes',
+  .Post('/configuracao',
     procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     var
       vBody : TJsonObject;
-      aGuuid: string;
     begin
       vBody := TJSONObject.ParseJSONValue(Req.Body) as TJSONObject;
       try
-        TController.New.CONFIGURACAO.This.Insert(vBody);
+        TController.New.Configuracao.This.Insert(vBody);
         Res.Status(200).Send<TJsonObject>(vBody);
       except
         Res.Status(500).Send('');
       end;
     end)
 
-  .Put('/configuracoes/:ID',
+  .Put('/configuracao/:ID',
     procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     var
       vBody : TJsonObject;
@@ -80,19 +79,19 @@ begin
       vBody := TJSONObject.ParseJSONValue(Req.Body) as TJSONObject;
       try
         if not vBody.TryGetValue<String>('id', _id) then
-          vBody.AddPair('id_pessoa', Req.Params['ID']);
-        TController.New.CONFIGURACAO.This.Update(vBody);
+          vBody.AddPair('id_empresa', Req.Params['ID']);
+        TController.New.Configuracao.This.Update(vBody);
         Res.Status(200).Send<TJsonObject>(vBody);
       except
         Res.Status(500).Send('');
       end;
     end)
 
-  .Delete('/configuracoes/:id',
+  .Delete('/configuracao/:id',
   procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     begin
       try
-        TController.New.CONFIGURACAO.This.Delete('id_pessoa', Req.Params['id']);
+        TController.New.Configuracao.This.Delete('id_empresa',Req.Params['id']);
         Res.Status(200).Send('');
       except
         Res.Status(500).Send('');
@@ -101,3 +100,4 @@ begin
 end;
 
 end.
+

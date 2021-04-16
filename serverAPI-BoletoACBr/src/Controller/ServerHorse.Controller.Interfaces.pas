@@ -4,37 +4,30 @@ interface
 
 uses
   ServerHorse.Model.DAO,
-  ServerHorse.Model.Entidade.PESSOA,
-  ServerHorse.Model.Entidade.CONFIGURACAO,
-  ServerHorse.Model.Entidade.TITULOS, ServerHorse.Model.Entidade.CIDADES,
-  ServerHorse.Model.Entidade.CLASSIFICACAO, ServerHorse.Model.Entidade.CONTATO,
-  ServerHorse.Model.Entidade.ENDERECO, ServerHorse.Model.Entidade.REMESSA,
-  ServerHorse.Model.Entidade.REMESSA_TITULOS,
-  ServerHorse.Model.Entidade.RETORNO_TITULOS,
-  ServerHorse.Model.Entidade.RETORNO;
+  ServerHorse.Model.Entidade.Cliente,
+  ServerHorse.Model.Entidade.Configuracao,
+  ServerHorse.Model.Entidade.Empresa,
+  ServerHorse.Model.Entidade.Titulo;
 
 type
   iControllerEntity<T : class> = interface;
 
   iController = interface
     ['{6A60E341-CB38-4034-B924-FB9B49D98577}']
-    function CONFIGURACAO : iControllerEntity<TCONFIGURACAO>;
-    function PESSOAS : iControllerEntity<TPESSOA>;
-    function TITULOS : iControllerEntity<TTITULOS>;
-    function CIDADES : iControllerEntity<TCIDADES>;
-    function CLASSIFICACAO : iControllerEntity<TCLASSIFICACAO>;
-    function CONTATO : iControllerEntity<TCONTATO>;
-    function ENDERECO : iControllerEntity<TENDERECO>;
-    function REMESSA : iControllerEntity<TREMESSA>;
-    function REMESSA_TITULOS : iControllerEntity<TREMESSA_TITULOS>;
-    function RETORNO : iControllerEntity<TRETORNO>;
-    function RETORNO_TITULOS : iControllerEntity<TRETORNO_TITULOS>;
+    function Cliente : iControllerEntity<TCliente>;
+    function Configuracao : iControllerEntity<TConfiguracao>;
+    function Empresa : iControllerEntity<TEmpresa>;
+    function Titulo : iControllerEntity<TTitulo>;
   end;
 
   iControllerEntity<T : class> = interface
     ['{F7476B60-A9B9-48CA-B1B6-016DADEA41D6}']
     function This : iDAOGeneric<T>;
     function &End : iController;
+  end;
+
+  iControllerBoleto = interface
+    ['{9D274486-00A4-4C72-97FB-F9EDEA1F48E1}']
   end;
 
 implementation

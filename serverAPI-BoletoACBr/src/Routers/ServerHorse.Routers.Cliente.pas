@@ -1,19 +1,15 @@
-{
-Não se faz necessário a criação dos endpoint para o endereco, pois a mesma
-está relacionada a pessoa
-}
-unit ServerHorse.Routers.Endereco;
+unit ServerHorse.Routers.Cliente;
 
 interface
 
 uses
-  System.SysUtils,
   System.Classes,
+  System.SysUtils,
   System.JSON,
   Horse,
   Horse.Jhonson,
-  Horse.CORS,
-  Horse.Paginate;
+  Horse.Paginate,
+  Horse.CORS;
 
 procedure Registry;
 
@@ -23,7 +19,7 @@ uses
   ServerHorse.Controller,
   ServerHorse.Controller.Interfaces,
   ServerHorse.Utils,
-  ServerHorse.Model.Entidade.ENDERECO;
+  ServerHorse.Model.Entidade.Cliente;
 
 
 procedure Registry;
@@ -33,23 +29,23 @@ begin
   .Use(Jhonson)
   .Use(CORS)
 
-  .Get('/endereco',
+  .Get('/clientes',
     procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     var
-      iController : iControllerEntity<TENDERECO>;
+      iController : iControllerEntity<TCliente>;
     begin
-      iController := TController.New.ENDERECO;
+      iController := TController.New.Cliente;
       iController.This.DAO.Find;
 
       Res.Send<TJsonArray>(iController.This.DataSetAsJsonArray);
     end)
 
-  .Get('/endereco/:ID',
+  .Get('/cliente/:ID',
     procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     var
-      iController : iControllerEntity<TENDERECO>;
+      iController : iControllerEntity<TCliente>;
     begin
-      iController := TController.New.ENDERECO;
+      iController := TController.New.Cliente;
       iController.This
         .DAO
           .SQL
@@ -60,21 +56,21 @@ begin
       Res.Send<TJsonArray>(iController.This.DataSetAsJsonArray);
     end)
 
-  .Post('/endereco',
+  .Post('/cliente',
     procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     var
       vBody : TJsonObject;
     begin
       vBody := TJSONObject.ParseJSONValue(Req.Body) as TJSONObject;
       try
-        TController.New.ENDERECO.This.Insert(vBody);
+        TController.New.Cliente.This.Insert(vBody);
         Res.Status(200).Send<TJsonObject>(vBody);
       except
         Res.Status(500).Send('');
       end;
     end)
 
-  .Put('/endereco/:ID',
+  .Put('/cliente/:ID',
     procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     var
       vBody : TJsonObject;
@@ -84,18 +80,18 @@ begin
       try
         if not vBody.TryGetValue<String>('id', _id) then
           vBody.AddPair('id', Req.Params['ID']);
-        TController.New.ENDERECO.This.Update(vBody);
+        TController.New.Cliente.This.Update(vBody);
         Res.Status(200).Send<TJsonObject>(vBody);
       except
         Res.Status(500).Send('');
       end;
     end)
 
-  .Delete('/endereco/:id',
+  .Delete('/cliente/:id',
   procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     begin
       try
-        TController.New.ENDERECO.This.Delete('id', Req.Params['id']);
+        TController.New.Cliente.This.Delete('id',Req.Params['id']);
         Res.Status(200).Send('');
       except
         Res.Status(500).Send('');
@@ -104,3 +100,4 @@ begin
 end;
 
 end.
+

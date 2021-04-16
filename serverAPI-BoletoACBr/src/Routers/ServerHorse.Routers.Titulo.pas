@@ -1,15 +1,15 @@
-unit ServerHorse.Routers.Remessa_Titulos;
+unit ServerHorse.Routers.Titulo;
 
 interface
 
 uses
-  System.SysUtils,
   System.Classes,
+  System.SysUtils,
   System.JSON,
   Horse,
   Horse.Jhonson,
-  Horse.CORS,
-  Horse.Paginate;
+  Horse.Paginate,
+  Horse.CORS;
 
 procedure Registry;
 
@@ -19,7 +19,7 @@ uses
   ServerHorse.Controller,
   ServerHorse.Controller.Interfaces,
   ServerHorse.Utils,
-  ServerHorse.Model.Entidade.REMESSA_TITULOS;
+  ServerHorse.Model.Entidade.Titulo;
 
 
 procedure Registry;
@@ -29,77 +29,69 @@ begin
   .Use(Jhonson)
   .Use(CORS)
 
-  .Get('/remessatitulos',
+  .Get('/titulos',
     procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     var
-      iController : iControllerEntity<TREMESSA_TITULOS>;
+      iController : iControllerEntity<TTitulo>;
     begin
-      iController := TController.New.REMESSA_TITULOS;
+      iController := TController.New.Titulo;
       iController.This.DAO.Find;
 
       Res.Send<TJsonArray>(iController.This.DataSetAsJsonArray);
     end)
 
-  .Get('/remessatitulos/pessoa/:pessoa/remessa/:remessa/titulo/:titulo',
+  .Get('/titulo/:ID',
     procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     var
-      iController : iControllerEntity<TREMESSA_TITULOS>;
+      iController : iControllerEntity<TTitulo>;
     begin
-      iController := TController.New.REMESSA_TITULOS;
+      iController := TController.New.Titulo;
       iController.This
         .DAO
           .SQL
-            .Where('id_pessoa = ' + Req.Params['pessoa'] +
-                  ' and id_remessa = ' + Req.Params['remessa'] +
-                  ' and id_titulos = ' + Req.Params['titulo'])
+            .Where('ID = ' + Req.Params['ID'])
           .&End
         .Find;
 
       Res.Send<TJsonArray>(iController.This.DataSetAsJsonArray);
     end)
 
-  .Post('/remssatitulos',
+  .Post('/titulo',
     procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     var
       vBody : TJsonObject;
     begin
       vBody := TJSONObject.ParseJSONValue(Req.Body) as TJSONObject;
       try
-        TController.New.REMESSA_TITULOS.This.Insert(vBody);
+        TController.New.Titulo.This.Insert(vBody);
         Res.Status(200).Send<TJsonObject>(vBody);
       except
         Res.Status(500).Send('');
       end;
     end)
 
-  .Put('/remessatitulos/pessoa/:pessoa/remessa/:remessa/titulo/:titulo',
+  .Put('/titulo/:ID',
     procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     var
       vBody : TJsonObject;
-      idpessoa,idremessa,idtitulo: integer;
+      _id: string;
     begin
       vBody := TJSONObject.ParseJSONValue(Req.Body) as TJSONObject;
       try
-        if not vBody.TryGetValue<Integer>('id_pessoa', idpessoa) and
-          vBody.TryGetValue<Integer>('id_remessa', idremessa) and
-          vBody.TryGetValue<Integer>('id_titulo', idtitulo) then
-        begin
-          vBody.AddPair('id_pessoa', Req.Params['pessoa']);
-          vBody.AddPair('id_remessa', Req.Params['remessa']);
-          vBody.AddPair('id_titulo', Req.Params['titulo']);
-        end;
-        TController.New.REMESSA_TITULOS.This.Update(vBody);
+        if not vBody.TryGetValue<String>('id', _id) then
+          vBody.AddPair('id', Req.Params['ID']);
+        TController.New.Titulo.This.Update(vBody);
         Res.Status(200).Send<TJsonObject>(vBody);
       except
         Res.Status(500).Send('');
       end;
     end)
 
-  .Delete('/remessatitulos/:id',
+  .Delete('/titulo/:id',
   procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
     begin
       try
-        TController.New.REMESSA_TITULOS.This.Delete('id_pessoa', Req.Params['pessoa']);
+        TController.New.Titulo.This.Delete('id',Req.Params['id']);
         Res.Status(200).Send('');
       except
         Res.Status(500).Send('');
@@ -108,3 +100,4 @@ begin
 end;
 
 end.
+
