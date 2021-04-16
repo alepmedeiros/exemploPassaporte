@@ -21,6 +21,8 @@ type
       FCIDADE: String;
       FTIPO: String;
       FTELEFONE: String;
+      FBAIRRO: String;
+
       procedure SetCEP(const Value: String);
       procedure SetCIDADE(const Value: String);
       procedure SetCOMPLEMENTO(const Value: String);
@@ -33,6 +35,7 @@ type
       procedure SetTELEFONE(const Value: String);
       procedure SetTIPO(const Value: String);
       procedure SetUF(const Value: String);
+      procedure SetBAIRRO(const Value: String);
     public
       [Campo('ID'), PK, AUTOINC]
       property ID : Integer read FID write SetID;
@@ -48,8 +51,10 @@ type
       property LOGRADOURO : String read FLOGRADOURO write SetLOGRADOURO;
       [Campo('NUMERO')]
       property NUMERO : String read FNUMERO write SetNUMERO;
-      [Campo('CIDADE')]
+      [Campo('CEP')]
       property CEP : String read FCEP write SetCEP;
+      [Campo('BAIRRO')]
+      property BAIRRO : String read FBAIRRO write SetBAIRRO;
       [Campo('CIDADE')]
       property CIDADE : String read FCIDADE write SetCIDADE;
       [Campo('UF')]
@@ -63,6 +68,11 @@ type
 implementation
 
 { TEmpresa }
+
+procedure TEmpresa.SetBAIRRO(const Value: String);
+begin
+  FBAIRRO := Value;
+end;
 
 procedure TEmpresa.SetCEP(const Value: String);
 begin

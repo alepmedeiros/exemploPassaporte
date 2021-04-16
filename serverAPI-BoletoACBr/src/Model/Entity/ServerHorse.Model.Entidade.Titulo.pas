@@ -27,6 +27,7 @@ type
       FNUMERODOCUMENTO: String;
       FID : Integer;
       FLINKS: String;
+    FVALORDESCONTO: Currency;
 
       procedure SetDATAABATIMENTO(const Value: TDateTime);
       procedure SetDATADESCONTO(const Value: TDateTime);
@@ -46,6 +47,7 @@ type
       procedure SetVALORMORAJUROS(const Value: Currency);
       procedure SetID(const Value: Integer);
       procedure SetLINKS(const Value: String);
+    procedure SetVALORDESCONTO(const Value: Currency);
     public
       [Campo('ID'), PK, AUTOINC]
       property ID : Integer read FID write SetID;
@@ -69,6 +71,8 @@ type
       property VALORABATIMENTO : Currency read FVALORABATIMENTO write SetVALORABATIMENTO;
       [Campo('VALORMORAJUROS')]
       property VALORMORAJUROS : Currency read FVALORMORAJUROS write SetVALORMORAJUROS;
+      [Campo('VALORDESCONTO')]
+      property VALORDESCONTO : Currency read FVALORDESCONTO write SetVALORDESCONTO;
       [Campo('DATAMORAJUROS')]
       property DATAMORAJUROS : TDateTime read FDATAMORAJUROS write SetDATAMORAJUROS;
       [Campo('DATADESCONTO')]
@@ -167,6 +171,11 @@ end;
 procedure TTitulo.SetVALORABATIMENTO(const Value: Currency);
 begin
   FVALORABATIMENTO := Value;
+end;
+
+procedure TTitulo.SetVALORDESCONTO(const Value: Currency);
+begin
+  FVALORDESCONTO := Value;
 end;
 
 procedure TTitulo.SetVALORDOCUMENTO(const Value: Currency);

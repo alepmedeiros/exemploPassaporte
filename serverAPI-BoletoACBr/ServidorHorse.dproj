@@ -156,6 +156,11 @@
         <DCCReference Include="src\Model\services\ServidorHorse.Model.Services.Interfaces.pas"/>
         <DCCReference Include="src\Model\services\ServidorHorse.Model.Services.Cedente.pas"/>
         <DCCReference Include="src\Model\services\ServidorHorse.Model.Services.Boleto.pas"/>
+        <DCCReference Include="src\Unit1.pas">
+            <Form>DataModule1</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <None Include="ServidorHorse.todo"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

@@ -18,7 +18,7 @@ type
       FNOMEARQREMESSA: String;
       FCODIGOCEDENTE: String;
       FTIPOPAGAMENTO: Integer;
-      FACEITE: String;
+      FACEITE: Integer;
       FLAYOUTDOCUMENTO: String;
       FLOCALPAGAMENTO: String;
       FCONTADIG: String;
@@ -38,7 +38,7 @@ type
       procedure SetCODBANCO(const Value: Integer);
       procedure SetID_EMPRESA(const Value: Integer);
       procedure SetTIPOCOBRANCA(const Value: Integer);
-      procedure SetACEITE(const Value: String);
+      procedure SetACEITE(const Value: Integer);
       procedure SetAGENCIADIG(const Value: String);
       procedure SetARQUIVOLOGO(const Value: String);
       procedure SetCARTEIRA(const Value: String);
@@ -87,7 +87,7 @@ type
       [Campo('ESPECIEMOD')]
       property ESPECIEMOD : String read FESPECIEMOD write SetESPECIEMOD;
       [Campo('ACEITE')]
-      property ACEITE : String read FACEITE write SetACEITE;
+      property ACEITE : Integer read FACEITE write SetACEITE;
       [Campo('LOCALPAGAMENTO')]
       property LOCALPAGAMENTO : String read FLOCALPAGAMENTO write SetLOCALPAGAMENTO;
       [Campo('DIRARQREMESSA')]
@@ -116,7 +116,7 @@ implementation
 
 { TConfiguracao }
 
-procedure TConfiguracao.SetACEITE(const Value: String);
+procedure TConfiguracao.SetACEITE(const Value: Integer);
 begin
   FACEITE := Value;
 end;

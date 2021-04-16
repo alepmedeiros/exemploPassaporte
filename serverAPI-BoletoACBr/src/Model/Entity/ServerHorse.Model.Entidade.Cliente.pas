@@ -45,7 +45,7 @@ type
       property NOME : String read FNOME write SetNOME;
       [Campo('CPFCNPJ')]
       property CPFCNPJ : String read FCPFCNPJ write SetCPFCNPJ;
-      [Campo('CPFCNPJ')]
+      [Campo('LOGRADOURO')]
       property LOGRADOURO : String read FLOGRADOURO write SetLOGRADOURO;
       [Campo('NUMERO')]
       property NUMERO : String read FNUMERO write SetNUMERO;
