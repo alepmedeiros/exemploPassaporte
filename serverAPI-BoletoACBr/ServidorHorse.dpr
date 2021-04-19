@@ -24,8 +24,7 @@ uses
   ServerHorse.Routers.Titulo in 'src\Routers\ServerHorse.Routers.Titulo.pas',
   ServidorHorse.Model.Services.Interfaces in 'src\Model\services\ServidorHorse.Model.Services.Interfaces.pas',
   ServidorHorse.Model.Services.Cedente in 'src\Model\services\ServidorHorse.Model.Services.Cedente.pas',
-  ServidorHorse.Model.Services.Boleto in 'src\Model\services\ServidorHorse.Model.Services.Boleto.pas',
-  Unit1 in 'src\Unit1.pas' {DataModule1: TDataModule};
+  ServidorHorse.Model.Services.Boleto in 'src\Model\services\ServidorHorse.Model.Services.Boleto.pas';
 
 begin
   ServerHorse.Routers.Titulo.Registry;
